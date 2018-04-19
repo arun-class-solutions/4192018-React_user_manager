@@ -5,7 +5,9 @@ class UserList extends Component {
   constructor() {
     super();
 
-
+    this.state = {
+      users: []
+    };
   }
 
   componentDidMount() {
@@ -13,6 +15,9 @@ class UserList extends Component {
     .get("https://myapi-profstream.herokuapp.com/api/403281/persons")
     .then((response) => {
       // To get body of response, it is response.data
+      this.setState({
+        users: response.data
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -43,23 +48,27 @@ class UserList extends Component {
         		</thead>
 
         		<tbody>
-        			<tr>
-        				<td>
-        					Arun
-        				</td>
-        				<td>
-        					Sood
-        				</td>
-        				<td>
-        					arsood
-        				</td>
-        				<td>
-        					arsood@gmail.com
-        				</td>
-        				<td>
-        					<a href="#" className="btn btn-primary">Edit</a>
-        				</td>
-        			</tr>
+              {this.state.users.map((user, index) => {
+                return (
+            			<tr key={index}>
+            				<td>
+            					{user.firstname}
+            				</td>
+            				<td>
+            					{user.lastname}
+            				</td>
+            				<td>
+            					{user.username}
+            				</td>
+            				<td>
+            					{user.email}
+            				</td>
+            				<td>
+            					<a href="#" className="btn btn-primary">Edit</a>
+            				</td>
+            			</tr>
+                )
+              }) }
         		</tbody>
         	</table>
         </div>
