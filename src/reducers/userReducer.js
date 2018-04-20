@@ -1,5 +1,9 @@
 const initialState = {
-  users: []
+  users: [],
+  firstname: "",
+  lastname: "",
+  username: "",
+  email: ""
 };
 
 const userReducer = (state = initialState, action) => {
@@ -8,6 +12,10 @@ const userReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         users: action.payload
       });
+    }
+
+    case "GET_ONE_USER_SUCCESS": {
+      return Object.assign({}, state, action.payload);
     }
 
     default: {

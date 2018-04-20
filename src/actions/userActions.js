@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BASE_URL } from "../config/app-constants";
 
 export const getAllUsers = () => {
   return (dispatch) => {
@@ -12,6 +13,22 @@ export const getAllUsers = () => {
     })
     .catch((err) => {
       console.log(err);
+    });
+  }
+}
+
+export const getSingleUser = (id) => {
+  return (dispatch) => {
+    return axios
+    .get(`${BASE_URL}/${id}`)
+    .then((response) => {
+      dispatch({
+        type: "GET_ONE_USER_SUCCESS",
+        payload: response.data
+      });
+    })
+    .catch((err) => {
+      alert("Error getting user!");
     });
   }
 }

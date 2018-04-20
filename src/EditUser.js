@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getSingleUser } from "./actions/userActions";
+
 import { BASE_URL } from "./config/app-constants";
 
 class EditUser extends Component {
@@ -39,14 +43,7 @@ class EditUser extends Component {
   }
 
   componentDidMount() {
-    axios
-    .get(`${BASE_URL}/${this.props.match.params.id}`)
-    .then((response) => {
-      this.setState(response.data);
-    })
-    .catch((err) => {
-      alert("Error getting user!");
-    });
+    this.props.getSingleUser(this.props.match.params.id);
   }
 
   render() {
@@ -67,25 +64,25 @@ class EditUser extends Component {
           			First Name
           		</div>
           		<div className="margin-top-20">
-          			<input onChange={this.handleChange} name="firstname" value={this.state.firstname} type="text" className="form-control" />
+          			<input onChange={this.handleChange} name="firstname" value={this.props.usersState.firstname} type="text" className="form-control" />
           		</div>
           		<div className="bold margin-top-20">
           			Last Name
           		</div>
           		<div className="margin-top-20">
-          			<input onChange={this.handleChange} name="lastname" value={this.state.lastname} type="text" className="form-control" />
+          			<input onChange={this.handleChange} name="lastname" value={this.props.usersState.lastname} type="text" className="form-control" />
           		</div>
           		<div className="bold margin-top-20">
           			Username
           		</div>
           		<div className="margin-top-20">
-          			<input onChange={this.handleChange} name="username" value={this.state.username} type="text" className="form-control" />
+          			<input onChange={this.handleChange} name="username" value={this.props.usersState.username} type="text" className="form-control" />
           		</div>
           		<div className="bold margin-top-20">
           			Email
           		</div>
           		<div className="margin-top-20">
-          			<input onChange={this.handleChange} name="email" value={this.state.email} type="text" className="form-control" />
+          			<input onChange={this.handleChange} name="email" value={this.props.usersState.email} type="text" className="form-control" />
           		</div>
           		<div className="margin-top-20 txt-right">
           			<a href="#" className="btn btn-default">Cancel</a>
@@ -99,4 +96,16 @@ class EditUser extends Component {
   }
 }
 
-export default EditUser;
+const mapStateToProps = (state) => {
+  return {
+    usersState: state.userReducer
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getSingleUser: bindActionCreators(getSingleUser, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditUser);
