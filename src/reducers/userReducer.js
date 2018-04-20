@@ -18,6 +18,10 @@ const userReducer = (state = initialState, action) => {
       return Object.assign({}, state, action.payload);
     }
 
+    case "EDIT_USER_TYPING": {
+      return Object.assign({}, state, action.payload);
+    }
+
     default: {
       return state;
     }

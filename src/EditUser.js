@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getSingleUser } from "./actions/userActions";
+import { getSingleUser, editUserTyping } from "./actions/userActions";
 
 import { BASE_URL } from "./config/app-constants";
 
@@ -23,9 +23,9 @@ class EditUser extends Component {
   }
 
   handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+    this
+    .props
+    .editUserTyping(event.target.name, event.target.value);
   }
 
   handleSubmit(event) {
@@ -104,7 +104,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getSingleUser: bindActionCreators(getSingleUser, dispatch)
+    getSingleUser: bindActionCreators(getSingleUser, dispatch),
+    editUserTyping: bindActionCreators(editUserTyping, dispatch)
   }
 }
 

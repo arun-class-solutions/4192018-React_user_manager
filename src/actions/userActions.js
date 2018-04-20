@@ -32,3 +32,14 @@ export const getSingleUser = (id) => {
     });
   }
 }
+
+export const editUserTyping = (name, value) => {
+  return (dispatch) => {
+    dispatch({
+      type: "EDIT_USER_TYPING",
+      payload: {
+        [name]: value
+      }
+    });
+  }
+}
