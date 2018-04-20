@@ -1,10 +1,29 @@
 import React, { Component } from "react";
+import axios from "axios";
+
+import { BASE_URL } from "./config/app-constants";
 
 class EditUser extends Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props.match.params.id, "ID OF USER");
+    this.state = {
+      firstname: "",
+      lastname: "",
+      username: "",
+      email: ""
+    };
+  }
+
+  componentDidMount() {
+    axios
+    .get(`${BASE_URL}/${this.props.match.params.id}`)
+    .then((response) => {
+      this.setState(response.data);
+    })
+    .catch((err) => {
+      alert("Error getting user!");
+    });
   }
 
   render() {
@@ -24,25 +43,25 @@ class EditUser extends Component {
         			First Name
         		</div>
         		<div className="margin-top-20">
-        			<input type="text" className="form-control" />
+        			<input name="firstname" value={this.state.firstname} type="text" className="form-control" />
         		</div>
         		<div className="bold margin-top-20">
         			Last Name
         		</div>
         		<div className="margin-top-20">
-        			<input type="text" className="form-control" />
+        			<input name="lastname" value={this.state.lastname} type="text" className="form-control" />
         		</div>
         		<div className="bold margin-top-20">
         			Username
         		</div>
         		<div className="margin-top-20">
-        			<input type="text" className="form-control" />
+        			<input name="username" value={this.state.username} type="text" className="form-control" />
         		</div>
         		<div className="bold margin-top-20">
         			Email
         		</div>
         		<div className="margin-top-20">
-        			<input type="text" className="form-control" />
+        			<input name="email" value={this.state.email} type="text" className="form-control" />
         		</div>
         		<div className="margin-top-20 txt-right">
         			<a href="#" className="btn btn-default">Cancel</a>

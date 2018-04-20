@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import update from "immutability-helper";
 
@@ -99,7 +100,9 @@ class UserList extends Component {
             					{user.email}
             				</td>
             				<td>
-            					<a href="#" className="btn btn-primary">Edit</a>
+                      <Link to={`/${user.id}/edit`} className="btn btn-primary">
+                        Edit
+                      </Link>
             				</td>
             			</tr>
                 )
