@@ -43,3 +43,10 @@ export const editUserTyping = (name, value) => {
     });
   }
 }
+
+export const submitEdits = (id, userObj) => {
+  return (dispatch) => {
+    return axios
+    .put(`${BASE_URL}/${id}`, userObj);
+  }
+}

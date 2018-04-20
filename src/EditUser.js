@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getSingleUser, editUserTyping } from "./actions/userActions";
+import { getSingleUser, editUserTyping, submitEdits } from "./actions/userActions";
 
 import { BASE_URL } from "./config/app-constants";
 
@@ -31,14 +31,14 @@ class EditUser extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    axios
-    .put(`${BASE_URL}/${this.props.match.params.id}`, this.state)
+    this
+    .props
+    .submitEdits(this.props.match.params.id, this.props.usersState)
     .then(() => {
-      // Use React router to go to user list page
       this.props.history.push("/");
     })
     .catch((err) => {
-      alert("Error saving edits");
+      alert("Error saving user edits");
     });
   }
 
@@ -105,7 +105,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getSingleUser: bindActionCreators(getSingleUser, dispatch),
-    editUserTyping: bindActionCreators(editUserTyping, dispatch)
+    editUserTyping: bindActionCreators(editUserTyping, dispatch),
+    submitEdits: bindActionCreators(submitEdits, dispatch)
   }
 }
 
