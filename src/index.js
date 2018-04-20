@@ -6,8 +6,16 @@ import registerServiceWorker from "./registerServiceWorker";
 import { Router, Route, Switch } from "react-router-dom";
 import createBrowserHistory from "history/createBrowserHistory";
 
+// Application components
 import UserList from "./UserList";
 import EditUser from "./EditUser";
+
+import { Provider } from "react-redux";
+
+import createStore from "./config/createStore";
+
+// Create Redux store
+const store = createStore();
 
 // Optimize production bundle
 registerServiceWorker();
@@ -15,12 +23,14 @@ registerServiceWorker();
 const history = createBrowserHistory();
 
 ReactDOM.render(
-  <Router history={history}>
-    <Switch>
-      <Route exact path="/" component={UserList} />
-      <Route exact path="/:id/edit" component={EditUser} />
-    </Switch>
-  </Router>
+  <Provider store={store}>
+    <Router history={history}>
+      <Switch>
+        <Route exact path="/" component={UserList} />
+        <Route exact path="/:id/edit" component={EditUser} />
+      </Switch>
+    </Router>
+  </Provider>
   ,
   document.getElementById("root")
 );
