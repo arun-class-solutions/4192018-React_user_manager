@@ -13,6 +13,29 @@ class EditUser extends Component {
       username: "",
       email: ""
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    axios
+    .put(`${BASE_URL}/${this.props.match.params.id}`, this.state)
+    .then(() => {
+      // Use React router to go to user list page
+      this.props.history.push("/");
+    })
+    .catch((err) => {
+      alert("Error saving edits");
+    });
   }
 
   componentDidMount() {
@@ -38,36 +61,38 @@ class EditUser extends Component {
         </div>
 
         <div className="small-container margin-top-20">
-        	<div className="well">
-        		<div className="bold">
-        			First Name
-        		</div>
-        		<div className="margin-top-20">
-        			<input name="firstname" value={this.state.firstname} type="text" className="form-control" />
-        		</div>
-        		<div className="bold margin-top-20">
-        			Last Name
-        		</div>
-        		<div className="margin-top-20">
-        			<input name="lastname" value={this.state.lastname} type="text" className="form-control" />
-        		</div>
-        		<div className="bold margin-top-20">
-        			Username
-        		</div>
-        		<div className="margin-top-20">
-        			<input name="username" value={this.state.username} type="text" className="form-control" />
-        		</div>
-        		<div className="bold margin-top-20">
-        			Email
-        		</div>
-        		<div className="margin-top-20">
-        			<input name="email" value={this.state.email} type="text" className="form-control" />
-        		</div>
-        		<div className="margin-top-20 txt-right">
-        			<a href="#" className="btn btn-default">Cancel</a>
-        			<button type="submit" className="btn btn-primary">Edit User</button>
-        		</div>
-        	</div>
+          <form onSubmit={this.handleSubmit}>
+          	<div className="well">
+          		<div className="bold">
+          			First Name
+          		</div>
+          		<div className="margin-top-20">
+          			<input onChange={this.handleChange} name="firstname" value={this.state.firstname} type="text" className="form-control" />
+          		</div>
+          		<div className="bold margin-top-20">
+          			Last Name
+          		</div>
+          		<div className="margin-top-20">
+          			<input onChange={this.handleChange} name="lastname" value={this.state.lastname} type="text" className="form-control" />
+          		</div>
+          		<div className="bold margin-top-20">
+          			Username
+          		</div>
+          		<div className="margin-top-20">
+          			<input onChange={this.handleChange} name="username" value={this.state.username} type="text" className="form-control" />
+          		</div>
+          		<div className="bold margin-top-20">
+          			Email
+          		</div>
+          		<div className="margin-top-20">
+          			<input onChange={this.handleChange} name="email" value={this.state.email} type="text" className="form-control" />
+          		</div>
+          		<div className="margin-top-20 txt-right">
+          			<a href="#" className="btn btn-default">Cancel</a>
+          			<button type="submit" className="btn btn-primary">Edit User</button>
+          		</div>
+          	</div>
+          </form>
         </div>
       </div>
     );
